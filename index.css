@@ -1,22 +1,44 @@
 html {
-   background: #eeeeee url(main.jpg);
-   background-size: cover;
    text-align: center;
    font-size: 10px;
 }
 
 body{
+   background: url(main.jpg);
+   background-size: cover;
+   font-family: serif;
    min-height: 100vh;
    margin: 0;
    font-size: 2rem;
    align-items: center;
    display:flex;
    flex:1;  
-}     
+}
+
+.location-text {
+   position: absolute;
+   top: 7%;
+   left: 7%;
+   color: white;
+}
+
+#location-main {
+   font-size: 3em;
+   text-shadow: 
+		0 0 1px #fff, 
+		0 1px 2px rgba(0,0,0,0.7);
+}
+
+#location-time {
+   font-size: 2.2em;
+   text-shadow: 
+		0 0 1px #fff, 
+		0 1px 2px rgba(0,0,0,0.7);
+}
 
 .clock{     
-   height: 40rem;
-   width: 40rem;
+   height: 50rem;
+   width: 50rem;
    border: 20px solid white;
    border-radius: 50%;
    margin: 50px auto;
@@ -33,6 +55,18 @@ body{
    transform: translateY(-3px); /* account for the height of the clock hands */
 } 
 
+.circle-hand {
+   background: black;
+   width: 2rem;
+   height: 2rem;
+   border-radius: 50%;
+   transform-origin: 100%;
+   top: 48%;
+   position: absolute;
+   left: 47.5%;
+   z-index: 2;
+}
+
 .hand {
    width: 50%;
    background: black;
@@ -41,17 +75,21 @@ body{
    top:50%;
    transform-origin: 100%;
    transform: rotate(90deg);
-   transition: all 0.7s;
-   transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+   transition: all 1.2s;
 }
 
 .second-hand {
    height: 3px;
+   width: 55%;
+   left: .5%;
+   transform-origin: 90%;
 }
 
 .hour-hand {
-   width: 30%;
-   left: 20%;
+   width: 27%;
+   top: 49%;
+   left: 23%;
+   height: 10px;
 }
 
 .location-info {
@@ -65,4 +103,8 @@ input {
 
 button {
    font-size: 1em;
+}
+
+.btn-outline-primary {
+   font-size: .8em;
 }
