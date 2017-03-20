@@ -20,30 +20,30 @@ var minuteHand = document.querySelector('.min-hand');
 var hourHand = document.querySelector('.hour-hand');
 
 // Set Initial State
-var utc = moment.utc();
-$('#location-time').html(today);
+   var utc = moment.utc();
+   $('#location-time').html(today);
 
-//  Assign Time
-var seconds = utc.format('s');
-var minutes = utc.format('m');
-var hour = utc.format('h');
-var digitalTime = utc.format('hh:mm A');
+   //  Assign Time
+   var seconds = utc.format('s');
+   var minutes = utc.format('m');
+   var hour = utc.format('h');
+   var digitalTime = utc.format('hh:mm A');
 
-// Assign Degree
-var secondsDegree = ((seconds / 60) * 360) + 90;
-var minutesDegree = ((minutes / 60) * 360) + 90;
-var hourDegree = ((hour / 12) * 360) + 90;
+   // Assign Degree
+   var secondsDegree = ((seconds / 60) * 360) + 90;
+   var minutesDegree = ((minutes / 60) * 360) + 90;
+   var hourDegree = ((hour / 12) * 360) + 90;
 
-// Style HTML
-secondHand.style.transform = `rotate(${secondsDegree}deg)`;
-minuteHand.style.transform = `rotate(${minutesDegree}deg)`;
-hourHand.style.transform = `rotate(${hourDegree}deg)`;
-$('#location-time').html(digitalTime);
+   // Style HTML
+   secondHand.style.transform = `rotate(${secondsDegree}deg)`;
+   minuteHand.style.transform = `rotate(${minutesDegree}deg)`;
+   hourHand.style.transform = `rotate(${hourDegree}deg)`;
+   $('#location-time').html(digitalTime);
 
 // Allow Input To Be Submitted With Enter Character
 $('input').keypress(function(e){
    if (e.keyCode == 13 || e.which == 13){
-      getLocation();
+      animateClock();
    };
 });
 
@@ -72,19 +72,19 @@ var getLocation = function(){
          var lat = data['results'][0]['geometry']['location']['lat'];
          var coordinates = lat + ',' + lng;
 
-         // *** Send Coordinates Through Dark Sky API and Retrieve Location Time *** //
+         // *** Send Coordinates Through Timezone API and Retrieve Location Time *** //
          $.ajax({
-            url: 'https://api.darksky.net/forecast/379c15beaf1957c0afaca05bd48f9423/' + coordinates,
+            url: 'http://api.timezonedb.com/v2/get-time-zone?key=LYCNF3UUW36Q&format=json&by=position&lat=' + lat + '&lng=' + lng,
             data: {format: 'json'},
             // Hnadle Error
             error: function(data, textStatus, xhr){
-               console.log('Error With Dark Sky', error);
+               console.log('Error With Request', error);
             },
             dataType: 'jsonp',
             // Handle Success
             success: function(data){
                // Get Time Zone From Dark Sky
-               var timezone = data['timezone'];
+               var timezone = data['zoneName'];
 
                // Create Date Using MomentJS
                var time = moment.tz(timezone);
@@ -107,7 +107,6 @@ var getLocation = function(){
                $('#location-main').html(locationInfo);
                $('#location-time').html(digitalTime);
                
-               $('#input').val('');
             },
             type: 'GET'
          }); // End Dark Sky API
@@ -116,7 +115,8 @@ var getLocation = function(){
    }); //End Google Geocode API
 }; 
 
-var updateTime = function(){
+var animateClock = function(){
+   setInterval(getLocation, 1000);
+};
 
-}
 
